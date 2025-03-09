@@ -11,24 +11,45 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
 var _Queue_instances, _Queue_data, _Queue_errors, _Queue_results, _Queue_activeCount, _Queue_runTask;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Queue = void 0;
 class Queue {
+    /**
+     * Creates an instance of Queue.
+     * @param concurrency - Maximum number of tasks to run in parallel.
+     * @param timeoutPromise - Timeout for each task in milliseconds.
+     */
     constructor(concurrency = 5, // Max parallel tasks
     timeoutPromise = 10000 // Timeout in ms
     ) {
         _Queue_instances.add(this);
         this.concurrency = concurrency;
         this.timeoutPromise = timeoutPromise;
+        // Private properties to store tasks, errors, results, and active task count
         _Queue_data.set(this, []);
         _Queue_errors.set(this, []);
         _Queue_results.set(this, []);
         _Queue_activeCount.set(this, 0);
     }
+    /**
+     * Gets the number of tasks currently in the queue.
+     *
+     * @returns The number of tasks in the queue.
+     */
     get length() {
         return __classPrivateFieldGet(this, _Queue_data, "f").length;
     }
+    /**
+     * Adds a new task to the queue.
+     * @param item - A function that returns a promise representing the task.
+     */
     push(item) {
         __classPrivateFieldGet(this, _Queue_data, "f").push(item);
     }
+    /**
+     * Runs the tasks in the queue with concurrency control and timeout handling.
+     * @returns A promise that resolves with the results and errors of the tasks.
+     */
     async run() {
         return new Promise((resolve) => {
             const next = async () => {
@@ -55,7 +76,10 @@ class Queue {
         });
     }
 }
-_Queue_data = new WeakMap(), _Queue_errors = new WeakMap(), _Queue_results = new WeakMap(), _Queue_activeCount = new WeakMap(), _Queue_instances = new WeakSet(), _Queue_runTask = async function _Queue_runTask(task) {
+exports.Queue = Queue;
+_Queue_data = new WeakMap(), _Queue_errors = new WeakMap(), _Queue_results = new WeakMap(), _Queue_activeCount = new WeakMap(), _Queue_instances = new WeakSet(), _Queue_runTask = 
+// Private method to run a single task with timeout handling
+async function _Queue_runTask(task) {
     const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Task timed out")), this.timeoutPromise));
     try {
         const result = await Promise.race([task(), timeoutPromise]);
@@ -65,4 +89,3 @@ _Queue_data = new WeakMap(), _Queue_errors = new WeakMap(), _Queue_results = new
         __classPrivateFieldGet(this, _Queue_errors, "f").push(error);
     }
 };
-//# sourceMappingURL=Queue.js.map

@@ -1,10 +1,13 @@
 {
   "name": "prom-queue",
-  "version": "2.0.0",
-  "main": "Queue.js",
-  "type": "module",
+  "version": "2.0.4",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "commonjs",
+  "files": ["dist"],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "keywords": ["queue", "data structure", "multi-threading"],
   "author": "prams",
