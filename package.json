@@ -1,15 +1,23 @@
 {
-  "name": "queue",
-  "version": "1.0.0",
+  "name": "prom-queue",
+  "version": "2.0.0",
   "main": "Queue.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["queue", "data structure", "multi-threading"],
+  "author": "prams",
   "license": "ISC",
-  "description": "",
+  "description": "A simple queue implementation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pramsh/prom-queue"
+  },
+  "bugs": {
+    "url": "https://github.com/Pramsh/prom-queue/issues"
+  },
+  "homepage": "https://github.com/Pramsh/prom-queue/blob/master/README.md",
   "devDependencies": {
     "@types/node": "^22.13.10"
   }

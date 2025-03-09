@@ -1,5 +1,5 @@
 
-class Queue<T> {
+export class Queue<T> {
     // Private properties to store tasks, errors, results, and active task count
     #data: (() => Promise<T>)[] = [];
     #errors: Error[] = [];
